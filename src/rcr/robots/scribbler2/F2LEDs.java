@@ -31,7 +31,7 @@ public class F2LEDs {
         // { 116,  1,  0, fluke_set_led_on },
         // { 117,  1,  0, fluke_set_led_off },
         // { 126,  2,  0, fluke_set_bright_led }, Controlar aquí el apagado y encendido
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[2];
             packet[0] = 126;
             packet[1] = (byte)(pwm & 0xFF);

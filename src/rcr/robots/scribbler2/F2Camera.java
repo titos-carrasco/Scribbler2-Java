@@ -48,7 +48,7 @@ import rcr.utils.SerialTimeoutException;
      */
     public void setPicSize( int size ) throws IOException {
         // {  11,  2,  0, fluke_set_picsize },
-        synchronized( this ) {
+        synchronized( s2 ) {
             int s, w, h;
             if( size == IMAGE_LARGE ) {
                 s = 213;
@@ -84,7 +84,7 @@ import rcr.utils.SerialTimeoutException;
         // { 137,  1,  0, fluke_get_jpeg_color_header },
         // { 138,  2,  0, fluke_get_jpeg_color_scan },
         // Utilizar un timeout de al menos 3000ms
-        synchronized( this ) {
+        synchronized( s2 ) {
             int reg, cmd_header, cmd;
             if( mode == IMAGE_GRAYJPEG ) {
                 reg = 1;
@@ -140,7 +140,7 @@ import rcr.utils.SerialTimeoutException;
      */
    public void whiteBalanceOn() throws IOException {
         // { 129,  1,  0, fluke_white_balance_on },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = (byte)129;
             s2.sendF2Command( packet, 100 );
@@ -152,7 +152,7 @@ import rcr.utils.SerialTimeoutException;
      */
     public void whiteBalanceOff() throws IOException {
         // { 130,  1,  0, fluke_white_balance_off },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = (byte)130;
             s2.sendF2Command( packet, 100 );
@@ -164,7 +164,7 @@ import rcr.utils.SerialTimeoutException;
      */
     public void setCameraParam( int addr, int value ) throws IOException {
         // { 131,  3,  0, fluke_set_camera_param },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[3];
             packet[0] = (byte)131;
             packet[1] = (byte)(addr & 0xFF);
@@ -178,7 +178,7 @@ import rcr.utils.SerialTimeoutException;
      */
     public void setWindow( int window, int xLow, int yLow, int xHigh, int yHigh, int xStep, int yStep) throws IOException {
         // { 127, 12,  0, fluke_set_window },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[12];
             packet[0] = (byte)127;
             packet[1] = (byte)(window & 0xFF);

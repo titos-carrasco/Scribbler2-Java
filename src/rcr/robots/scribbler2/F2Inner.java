@@ -36,7 +36,7 @@ public class F2Inner {
      */
     public String getVersion() throws IOException, SerialTimeoutException {
         // { 142,  1,  0, fluke_get_version },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = (byte)142;
             s2.sendF2Command( packet, 100 );
@@ -54,7 +54,7 @@ public class F2Inner {
      */
     public String identifyRobot() throws IOException, SerialTimeoutException {
         // { 156,  1,  0, fluke_identify_robot }, Resetea el Scribbler2
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = (byte)156;
             s2.sendF2Command( packet, 100 );
@@ -73,7 +73,7 @@ public class F2Inner {
      */
     public double getBattery() throws IOException, SerialTimeoutException {
         // {  89,  1,  0, fluke_get_battery },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = 89;
             s2.sendF2Command( packet, 100 );
@@ -90,7 +90,7 @@ public class F2Inner {
      */
     public void setForwardness( int forwardness ) throws IOException {
         // { 128,  2,  0, fluke_set_forwardness }, Graba en flashdata
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte f;
             if( forwardness == FLUKE_FORWARD) {
                 f = 0;
@@ -114,7 +114,7 @@ public class F2Inner {
      */
     public String getErrors() throws IOException, SerialTimeoutException {
         // {  10,  1,  0, fluke_get_errors },    // read error log - new for fluke2
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = 10;
             s2.sendF2Command( packet, 100 );
@@ -133,7 +133,7 @@ public class F2Inner {
     public void resetScribbler() throws IOException {
         // { 124,  1,  0, fluke_reset_scribbler },
         // { 154,  1,  0, fluke_reset_scrib2 },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = 124;
             s2.sendF2Command( packet, 100 );

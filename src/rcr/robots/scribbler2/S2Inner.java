@@ -34,7 +34,7 @@ public class S2Inner {
         // En algunos casos la F2 altera el primer caracter recibido desde el S2
         // cuando se hacen dos invocaciones sucesivas a este método
         // Esperar unos 100ms si se invoca dos veces
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 80 );
             s2.sendS2Command( packet, 0 );
             return s2.getLineResponse( 128 );
@@ -52,7 +52,7 @@ public class S2Inner {
     public HS2Sensors getAllSensors() throws IOException, SerialTimeoutException {
         // _GET_ALL          = 65  ' Response: leftIR rightIR LeftLightHighyte LeftLightLowByte CenterLightHighByte CenterLightLowByte RightLightHighByte RightLightLowByte LineLeft LineRight Stall 65
         // _GET_ALL_BINARY   = 66  ' Response: BinaryData 66, Notes: where the individual bits of BinaryData are: 0x000 IRLeft IRRight Stall LineLeft LineRight
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 65 );
             s2.sendS2Command( packet, 0 );
             return s2.getS2SensorsResponse();
@@ -69,7 +69,7 @@ public class S2Inner {
     public String getPass() throws IOException, SerialTimeoutException {
         // _GET_PASS1 = 50  ' Respone: 16 bytes from flash memory
         // _GET_PASS2 = 51  ' Respone: 16 bytes from flash memory
-        synchronized( this ) {
+        synchronized( s2 ) {
             String pass1, pass2;
             byte[] packet = s2.makeS2Packet( 50 );
             s2.sendS2Command( packet, 0 );
@@ -91,7 +91,7 @@ public class S2Inner {
     public String getName() throws IOException, SerialTimeoutException {
         // _GET_NAME1 = 78  ' Response: char1 char2 char3 char4 char5 char6 char7 char8 78
         // _GET_NAME2 = 64  ' Response: char9 char10 char11 char12 char13 char14 char15 char16 87
-        synchronized( this ) {
+        synchronized( s2 ) {
             String name1, name2;
             byte[] packet = s2.makeS2Packet( 78 );
             s2.sendS2Command( packet, 0 );
@@ -113,7 +113,7 @@ public class S2Inner {
      */
     public HS2State getState() throws IOException, SerialTimeoutException {
         // _GET_STATE = 77  ' Response: inPins outPins 77, Notes: inPins is the state of all the input pins (0-7), and outPins is the state of all the output pins (8-15) as defined in the I/O Pin Declarations.
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 77 );
             s2.sendS2Command( packet, 0 );
             return new HS2State( s2.getUInt8Response(), s2.getUInt8Response() );
@@ -129,7 +129,7 @@ public class S2Inner {
      */
     public byte[] getData() throws IOException, SerialTimeoutException {
         // _GET_DATA = 81  ' Response: data from flash memory 81
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 81 );
             s2.sendS2Command( packet, 0 );
             return s2.getBytesResponse( Scribbler2.DATA_LENGTH );
@@ -148,7 +148,7 @@ public class S2Inner {
     public HS2Sensors setPass(String pass) throws IOException, SerialTimeoutException {
         // _SET_PASS1 = 55  ' Format: 55 PASS1 PASS2 ... PASS8
         // _SET_PASS2 = 56  ' Format: 56 PASS9 PASS2 ... PASS16
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] bPass = pass.getBytes();
             int i, j;
             byte[] packet = s2.makeS2Packet( 55 );
@@ -185,7 +185,7 @@ public class S2Inner {
      */
     public HS2Sensors setSingleData(int pos, int data) throws IOException, SerialTimeoutException {
         // _SET_SINGLE_DATA = 96  ' Sets a single byte of data in flash memory'
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 96 );
             packet[1] = (byte)(pos & 0x07);
             packet[2] = (byte)(data & 0xFF);
@@ -205,7 +205,7 @@ public class S2Inner {
      */
     public HS2Sensors setData(byte[] data) throws IOException, SerialTimeoutException {
         // _SET_DATA = 97  ' Sets 8 bytes of data in flash memory
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = s2.makeS2Packet( 97 );
             for( int i=0; i<data.length && i<Scribbler2.DATA_LENGTH; i++ ) {
                 packet[i+1] = data[i];
@@ -227,7 +227,7 @@ public class S2Inner {
     public HS2Sensors setName(String name) throws IOException, SerialTimeoutException {
         // _SET_NAME1 = 110 ' Format: 110 char1 char2 char3 char4 char5 char6 char7 char8
         // _SET_NAME2 = 119 ' Format: 119 char9 char10 char11 char12 char13 char14 char15 char16
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] bName = name.getBytes();
             int i, j;
             byte[] packet = s2.makeS2Packet( 110 );

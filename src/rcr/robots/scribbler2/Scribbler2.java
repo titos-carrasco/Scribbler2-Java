@@ -55,6 +55,9 @@ public class Scribbler2 {
 
     /**
      * Construye el objeto para manipular el S2 a través de un canal serial
+     * Todas las operaciones sobre el robot deben realizarse con un mutex
+     * implementado como un lock sobre este objeto. Esto requiere que cada
+     * clase que implementa las componentes del S2 se adhiera a este contrato
      *
      * @param port la puerta serial a la cual conectarse ("/dev/rfcomm1", "COM1")
      * @param timeout tiempo de espera en ms para recibir los datos desde el S2
@@ -84,6 +87,7 @@ public class Scribbler2 {
 
     /***
      * Cierra la conexión con el S2
+     * No requiere el lock sobre este objeto pues implementa por sola el mutex
      */
     public void close() {
         synchronized( this ) {
@@ -235,6 +239,7 @@ public class Scribbler2 {
 
     /***
      * Envía el paquete de comando al S2 y valida el echo si corresponde
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @param packet el paquete a enviar de tamaño PACKET_LENGTH
      * @param pause tiempo para pausa despues de enviar el comando
@@ -264,6 +269,7 @@ public class Scribbler2 {
      * Si existe una Fluke2, ésta genera problemas de sincronización
      * debido al delay interno de 3000ms que posee al redirigir los comandos a la S2
      * Se ha de considerar este hecho y el que el S2 encola este tipo de comandos
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @param packet el paquete a enviar con el comando de trazado
      * @throws IOException
@@ -305,6 +311,7 @@ public class Scribbler2 {
     /***
      * Envía el paquete de comando a la Fluke2. El timeout intern0 de la F2 es de 3000ms
      * La F2 no envía ningún elemento de regreso para efectos de sincronismo
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @param packet el paquete a enviar con el comando a la F2
      * @param pause tiempo para pausa despues de enviar el comando
@@ -320,6 +327,7 @@ public class Scribbler2 {
     /***
      * Lee el valor de los sensores del S2. Estos valores son reportados
      * como respuesta a la mayoría de los comandos enviados al S2
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @return los sensores reportados por el S2
      * @throws IOException
@@ -334,6 +342,7 @@ public class Scribbler2 {
 
     /***
      * Lee una línea de respuesta desde la puerta serial terminada en NL
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @param maxChars máximo de caracteres a esperar en la línea antes del NL
      * @return la línea leida con el NL removido
@@ -346,6 +355,7 @@ public class Scribbler2 {
 
     /***
      * Lee una respuesta desde la puerta serial correspondiente a un UInt8
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @return el UInt8 leido
      * @throws IOException
@@ -357,6 +367,7 @@ public class Scribbler2 {
 
     /***
      * Lee una respuesta desde la puerta serial correspondiente a un UInt16
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @return el UInt16 leido
      * @throws IOException
@@ -368,6 +379,7 @@ public class Scribbler2 {
 
     /***
      * Lee una respuesta desde la puerta serial correspondiente a un UInt32
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @return el UInt32 leido
      * @throws IOException
@@ -379,6 +391,7 @@ public class Scribbler2 {
 
     /***
      * Lee una respuesta desde la puerta serial correspondiente a un Int32
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @return el Int32 leido
      * @throws IOException
@@ -390,6 +403,7 @@ public class Scribbler2 {
 
     /***
      * Lee una respuesta desde la puerta serial correspondiente a un arreglo de bytes
+     * Debe invocarse dentro de un mutex - lock sobre este objeto
      *
      * @param nbytes el número de bytes a leer como respuesta
      * @return los bytes leidos

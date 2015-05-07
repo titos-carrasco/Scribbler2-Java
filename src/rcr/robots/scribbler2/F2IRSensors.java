@@ -30,7 +30,7 @@ public class F2IRSensors {
      */
     public void setIRPower( int pwm ) throws IOException {
         // { 120,  2,  0, fluke_set_ir_power }, // SetBrightLed modifica el valor pwd registrado
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[2];
             packet[0] = 120;
             packet[1] = (byte)(pwm & 0xFF);
@@ -49,7 +49,7 @@ public class F2IRSensors {
         // {  85,  1,  0, fluke_get_ir_left },
         // {  86,  1,  0, fluke_get_ir_center }, Sólo existe éste
         // {  87,  1,  0, fluke_get_ir_right },
-        synchronized( this ) {
+        synchronized( s2 ) {
             byte[] packet = new byte[1];
             packet[0] = 86;
             s2.sendF2Command( packet, 100 );
