@@ -11,7 +11,6 @@ import rcr.utils.SerialTimeoutException;
  * @author Roberto Carrasco
  */
  public class F2Camera {
-    public static final int SCRIBBLER_FORWARD = 2;
     /** foto grande */
     public static final int IMAGE_LARGE = 1;
     /** foto pequeña */

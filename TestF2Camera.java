@@ -55,7 +55,8 @@ class TestF2Camera extends Component {
         for( int i = 1; i <= 30; i++ ) {
             System.out.println( "pidiendo imagen" );
             image = f2Camera.getImage( f2Camera.IMAGE_GRAYJPEG_FAST ); // IMAGE_JPEG_FAST, IMAGE_JPEG, IMAGE_GRAYJPEG
-            System.out.println( "mostrando imagen" );
+            System.out.print( "mostrando imagen " );
+            System.out.println( image );
             img = new TestF2Camera( image.image );
             if( last != null ) {
                 jf.remove(last);

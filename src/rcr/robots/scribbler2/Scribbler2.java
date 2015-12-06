@@ -52,6 +52,8 @@ public class Scribbler2 {
     private F2IRSensors f2IRSensors;
     /** el controlador de los LEDs de la F2 */
     private F2LEDs f2LEDs;
+    /** el controlador de los Servos */
+    private F2Servos f2Servos;
 
     /**
      * Construye el objeto para manipular el S2 a través de un canal serial
@@ -83,6 +85,7 @@ public class Scribbler2 {
         f2Inner = new F2Inner( this );
         f2IRSensors = new F2IRSensors( this );
         f2LEDs = new F2LEDs( this );
+        f2Servos = new F2Servos( this );
     }
 
     /***
@@ -216,13 +219,23 @@ public class Scribbler2 {
     }
 
     /***
-     * Otorga acceso al controlador dde los LEDs de la F2
+     * Otorga acceso al controlador de los LEDs de la F2
      *
      * @return el controlador de los LEDs de la F2
      * @see S2Speaker
      ***/
     public F2LEDs getF2LEDs() {
         return f2LEDs;
+    }
+
+    /***
+     * Otorga acceso al controlador de los servos de la F2
+     *
+     * @return el controlador de los LEDs de la F2
+     * @see S2Speaker
+     ***/
+    public F2Servos getF2Servos() {
+        return f2Servos;
     }
 
     /***
@@ -423,7 +436,6 @@ public class Scribbler2 {
     // SET_ECHO_MODE   = 98  ' Set the echo mode on or off; if off, no echo is made after command
 
 
-    {  12,  3,  0, fluke_servo },
     {  13,  3,  0, fluke_enable_pan },    // enable bluetooth PAN networking
     {  40,  7,  0, fluke_update_firmware },
     {  41,  1,  0, fluke_save_eeprom },

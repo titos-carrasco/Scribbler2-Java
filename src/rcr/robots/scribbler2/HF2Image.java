@@ -29,4 +29,13 @@ public class HF2Image {
         this.height = height;
         this.image = image;
     }
+
+    /**
+     * Retorna un objeto del tipo String representando datos de la imagen
+     *
+     *  @return un String representando datos de la imagen
+     */
+    public String toString() {
+        return "HF2Image(" + width + ", " + height + ", " + image.length + ")";
+    }
 }
