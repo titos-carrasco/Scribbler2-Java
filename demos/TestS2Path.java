@@ -1,8 +1,10 @@
-import rcr.scribbler2.S2Serial;
+//import rcr.scribbler2.S2Serial;
+import rcr.scribbler2.S2Fluke2;
 
 class TestS2Path {
     public static void main( String [] args ) throws Exception {
-        S2Serial robot = new S2Serial( "/dev/ttyUSB0", 38400, 3500, false );
+        //S2Serial robot = new S2Serial( "/dev/ttyUSB0", 38400, 3500, false );
+        S2Fluke2 robot = new S2Fluke2( "/dev/rfcomm2", 38400, 3500 );
 
         System.out.printf( "beginPath         : %s\n", robot.beginPath( 15 ) );
         System.out.printf( "setPosn -100, -100: %s\n", robot.setPosn( -100, -100 ) );
